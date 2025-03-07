@@ -1,0 +1,41 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muvaffaqiyali ro'yhatdan o'tdingiz</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{% static 'backend/images/favicon.ico' %}" type="image/x-icon">
+    <!-- Styles -->
+    <link rel="stylesheet" href="{% static 'backend/css/success.css' %}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="nor-container display-fColumn">
+        <header>
+            <div class="success-message display-f">
+                <img src="{% static 'backend/images/icons/check.png' %}" alt="*">
+                <span>Ma'lumotlaringzi muvaffaqiyatli yuborildi</span>
+            </div>
+        </header>
+        <main>
+            <div id="sn1">
+                <span>"Janubiy Koreyaning <span>top 1000</span> <br> nufuzli universitetlari"</span>
+            </div>
+            <div class="bookList display-gCenter">
+                <img src="{% static 'backend/images/sucBookList.png' %}" alt="Uni List">
+                <div><img id="arrow" src="{% static 'backend/images/icons/arrow-right.png' %}" alt="Arrow"></div>
+            </div>
+            <div id="botBtn" class="display-gCenter">
+                <a class="display-f" href="https://t.me/foreverstudyconsultingbot"><img src="{% static 'backend/images/icons/telegram.png' %}" alt="*"><span>Bepul Yuklash</span></a>
+            </div>
+            <div id="sn2" class="display-gCenter"><span>Telegram botga o'tib start <br>tugmasini bosing!</span></div>
+        </main>
+    </div>
+</body>
+</html>
