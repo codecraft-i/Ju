@@ -43,7 +43,7 @@ INSTALLED_APPS = [
 
     # Apps
     'backend.apps.BackendConfig',
-    'Bot.apps.BotConfig'
+    'Bot.apps.BotConfig',
 ]
 
 # Rest Framewor Settings

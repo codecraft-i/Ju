@@ -31,7 +31,11 @@
                 <div class="topSlider">
                     <div class="top-carousel">
                         <div class="top-carousel-images">
-                            <img src="/static/backend/images/minC1.jpg" alt="Image 1">
+                            {% if MinImages %}
+                                {% for MinImage in MinImages %}
+                                    <img src="{{ MinImage.image.url }}" alt="{{ MinImage.title|default:'Surat' }}">
+                                {% endfor %}
+                            {% endif %}
                         </div>
                         <div class="top-buttons">
                             <button class="top-btn top-left">&#10094;</button>
@@ -41,7 +45,7 @@
                     </div>
                 </div>
 
-                <div id="bConText"><span id="conText">Ma'lumotni olish uchun ro‘yxatdan o‘ting</span></div>
+                <div id="bConText"><span id="conText">{{ indexTitle.title }}</span></div>
 
                 <div class="post-data-container">
                     <form method="POST" id="registrationForm">
@@ -65,30 +69,112 @@
                             <div class="country-list" id="countryList"></div>
                         </div>
                         <div id="submitError" style="color: red; margin-top: 10px;"></div>
-
-                        <div class="certificate-container" style="margin: 10px 0 10px 0;">
-                            <label>Sizda til sertifikati bormi?</label><br>
-                            <div style="margin: 10px;"></div>
-                            <div class="display-f-Ac-Jstart">
-                                <label class="radio-label" style="margin: 0 10px 0 0;">
-                                    <input type="radio" name="language_certificate" id="cert_IELTS" value="IELTS" {% if form.language_certificate.value == 'IELTS' %}checked{% endif %}>
-                                    <div class="custom-radio"></div>
-                                    IELTS
-                                </label>
-                                <label class="radio-label" style="margin: 0 10px 0 0;">
-                                    <input type="radio" name="language_certificate" id="cert_TOPIK" value="TOPIK" {% if form.language_certificate.value == 'TOPIK' %}checked{% endif %}>
-                                    <div class="custom-radio"></div>
-                                    TOPIK
-                                </label>
-                                <label class="radio-label">
-                                    <input type="radio" name="language_certificate" id="cert_no" value="No" {% if form.language_certificate.value == 'No' %}checked{% endif %}>
-                                    <div class="custom-radio"></div>
-                                    Endi olaman
-                                </label>
+                        {% if certificate and certificate.IELTS or certificate.TOPIK or certificate.SAT or certificate.TOEFL or certificate.PTE or certificate.GRE or certificate.GMAT or certificate.Duolingo or certificate.KLAT or certificate.KIIP or certificate.EPS_TOPIK or certificate.NO %}
+                            <div class="certificate-container" style="margin: 10px 0 10px 0;">
+                                <label>Sizda til sertifikati bormi?</label><br>
+                                <div style="margin: 10px;"></div>
+                                <div class="display-f-Ac-Jstart">
+                                    {% if certificate.IELTS %}
+                                    <label class="radio-label labalCc IELTS{{ certificate.IELTS }}" style="margin: 0 10px 0 0;">
+                                        <input type="radio" name="language_certificate" id="cert_IELTS" value="IELTS" {% if form.language_certificate.value == 'IELTS' %}checked{% endif %}>
+                                        <div class="custom-radio"></div>
+                                        IELTS
+                                    </label>
+                                    {% endif %}
+                                    
+                                    {% if certificate.TOPIK %}
+                                    <label class="radio-label labalCc" style="margin: 0 10px 0 0;">
+                                        <input type="radio" name="language_certificate" id="cert_TOPIK" value="TOPIK" {% if form.language_certificate.value == 'TOPIK' %}checked{% endif %}>
+                                        <div class="custom-radio"></div>
+                                        TOPIK
+                                    </label>
+                                    {% endif %}
+                                    
+                                    {% if certificate.SAT %}
+                                    <label class="radio-label labalCc" style="margin: 0 10px 0 0;">
+                                        <input type="radio" name="language_certificate" id="cert_SAT" value="SAT" {% if form.language_certificate.value == 'SAT' %}checked{% endif %}>
+                                        <div class="custom-radio"></div>
+                                        SAT
+                                    </label>
+                                    {% endif %}
+                                    
+                                    {% if certificate.TOEFL %}
+                                    <label class="radio-label labalCc" style="margin: 0 10px 0 0;">
+                                        <input type="radio" name="language_certificate" id="cert_TOEFL" value="TOEFL" {% if form.language_certificate.value == 'TOEFL' %}checked{% endif %}>
+                                        <div class="custom-radio"></div>
+                                        TOEFL
+                                    </label>
+                                    {% endif %}
+                                    
+                                    {% if certificate.PTE %}
+                                    <label class="radio-label labalCc" style="margin: 0 10px 0 0;">
+                                        <input type="radio" name="language_certificate" id="cert_PTE" value="PTE" {% if form.language_certificate.value == 'PTE' %}checked{% endif %}>
+                                        <div class="custom-radio"></div>
+                                        PTE
+                                    </label>
+                                    {% endif %}
+                                    
+                                    {% if certificate.GRE %}
+                                    <label class="radio-label labalCc" style="margin: 0 10px 0 0;">
+                                        <input type="radio" name="language_certificate" id="cert_GRE" value="GRE" {% if form.language_certificate.value == 'GRE' %}checked{% endif %}>
+                                        <div class="custom-radio"></div>
+                                        GRE
+                                    </label>
+                                    {% endif %}
+                                    
+                                    {% if certificate.GMAT %}
+                                    <label class="radio-label labalCc" style="margin: 0 10px 0 0;">
+                                        <input type="radio" name="language_certificate" id="cert_GMAT" value="GMAT" {% if form.language_certificate.value == 'GMAT' %}checked{% endif %}>
+                                        <div class="custom-radio"></div>
+                                        GMAT
+                                    </label>
+                                    {% endif %}
+                                    
+                                    {% if certificate.Duolingo %}
+                                    <label class="radio-label labalCc" style="margin: 0 10px 0 0;">
+                                        <input type="radio" name="language_certificate" id="cert_Duolingo" value="Duolingo" {% if form.language_certificate.value == 'Duolingo' %}checked{% endif %}>
+                                        <div class="custom-radio"></div>
+                                        Duolingo
+                                    </label>
+                                    {% endif %}
+                                    
+                                    {% if certificate.KLAT %}
+                                    <label class="radio-label labalCc" style="margin: 0 10px 0 0;">
+                                        <input type="radio" name="language_certificate" id="cert_KLAT" value="KLAT" {% if form.language_certificate.value == 'KLAT' %}checked{% endif %}>
+                                        <div class="custom-radio"></div>
+                                        KLAT
+                                    </label>
+                                    {% endif %}
+                                    
+                                    {% if certificate.KIIP %}
+                                    <label class="radio-label labalCc" style="margin: 0 10px 0 0;">
+                                        <input type="radio" name="language_certificate" id="cert_KIIP" value="KIIP" {% if form.language_certificate.value == 'KIIP' %}checked{% endif %}>
+                                        <div class="custom-radio"></div>
+                                        KIIP
+                                    </label>
+                                    {% endif %}
+                                    
+                                    {% if certificate.EPS_TOPIK %}
+                                    <label class="radio-label labalCc" style="margin: 0 10px 0 0;">
+                                        <input type="radio" name="language_certificate" id="cert_EPS-TOPIK" value="EPS-TOPIK" {% if form.language_certificate.value == 'EPS-TOPIK' %}checked{% endif %}>
+                                        <div class="custom-radio"></div>
+                                        EPS-TOPIK
+                                    </label>
+                                    {% endif %}
+                                    
+                                    {% if certificate.NO %}
+                                    <label class="radio-label labalCc">
+                                        <input type="radio" name="language_certificate" id="cert_no" value="No" {% if form.language_certificate.value == 'No' %}checked{% endif %}>
+                                        <div class="custom-radio"></div>
+                                        Endi olaman
+                                    </label>
+                                    {% endif %}
+                                </div>
                             </div>
-                        </div>
+                        {% endif %}
+
                         <button type="submit" id="sendData">Ro'yhatdan o'tish</button>
-                        <a id="call" class="display-f" href="tel:+998950209799"><span><ion-icon name="call-outline" style="margin-right: 5px;"></ion-icon> Menejer bilan bog'lanish</span></a>
+                        <a id="call" class="display-f" href="tel:+{{ callNum.number }}"><span><ion-icon name="call-outline" style="margin-right: 5px;"></ion-icon> Menejer bilan bog'lanish</span></a>
                     </form>
                 </div>
             </main>
@@ -96,7 +182,11 @@
             <div class="mainSlide-container">
                 <div class="carousel">
                     <div class="carousel-images">
-                        <img src="/static/backend/images/img1.jpg" alt="Image 1">
+                        {% if MaxImages %}
+                            {% for MaxImage in MaxImages %}
+                                <img src="{{ MaxImage.image.url }}" alt="{{ MaxImage.title|default:'Surat' }}">
+                            {% endfor %}
+                        {% endif %}
                     </div>
                     <div class="buttons">
                         <button class="btn left">&#10094;</button>

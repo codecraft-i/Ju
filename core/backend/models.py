@@ -18,6 +18,18 @@ class Contact(models.Model):
     LANGUAGE_CERTIFICATE_CHOICES = [
         ('IELTS', 'IELTS'),
         ('TOPIK', 'TOPIK'),
+
+        ('SAT', 'SAT'),
+        ('TOEFL', 'TOEFL'),
+        ('PTE', 'PTE'),
+        ('GRE', 'GRE'),
+        ('GMAT', 'GMAT'),
+        ('Duolingo', 'Duolingo'),
+
+        ('KLAT', 'KLAT'),
+        ('KIIP', 'KIIP'),
+        ('EPS-TOPIK', 'EPS-TOPIK'),
+
         ('No', 'ENDI OLAMAN'),
     ]
     
@@ -30,7 +42,7 @@ class Contact(models.Model):
     phone = models.CharField(max_length=20)
     created_at = models.DateTimeField(auto_now_add=True)
     language_certificate = models.CharField(
-        max_length=11, choices=LANGUAGE_CERTIFICATE_CHOICES, default='No'
+        max_length=11, choices=LANGUAGE_CERTIFICATE_CHOICES, default='No', blank=True
     )
 
     is_checked = models.CharField(
@@ -75,3 +87,72 @@ class BlockedIP(models.Model):
     class Meta:
         verbose_name = "IP Address"
         verbose_name_plural = "IP Address"
+
+class IndexTitle(models.Model):
+    title = models.CharField(max_length=255)
+
+    def save(self, *args, **kwargs):
+        if not self.pk and IndexTitle.objects.exists():
+            return
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{ self.title }"
+
+class Certificate(models.Model):
+    IELTS = models.BooleanField(default=False)
+    TOPIK = models.BooleanField(default=False)
+    SAT = models.BooleanField(default=False)
+    TOEFL = models.BooleanField(default=False)
+    PTE = models.BooleanField(default=False)
+    GRE = models.BooleanField(default=False)
+    GMAT = models.BooleanField(default=False)
+    Duolingo = models.BooleanField(default=False)
+    KLAT = models.BooleanField(default=False)
+    KIIP = models.BooleanField(default=False)
+    EPS_TOPIK = models.BooleanField(default=False)
+
+    NO = models.BooleanField(default=False)
+
+    def save(self, *args, **kwargs):
+        if not self.pk and Certificate.objects.exists():
+            return
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return ", ".join([name for name, value in self.__dict__.items() if value is True and name != "_state"])
+    
+class CallNum(models.Model):
+    number = models.PositiveBigIntegerField(default=0)
+
+    def save(self, *args, **kwargs):
+        if not self.pk and CallNum.objects.exists():
+            return
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{ self.number }"
+    
+class MaxImage(models.Model):
+    title = models.CharField(max_length=100, blank=True, null=True)
+    image = models.ImageField(upload_to='images/', blank=False, null=False)
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title if self.title else f"Image {self.id}"
+
+    class Meta:
+        verbose_name = "Desktop Surat"
+        verbose_name_plural = "Desktop Suratlar"
+
+class MinImage(models.Model):
+    title = models.CharField(max_length=100, blank=True, null=True)
+    image = models.ImageField(upload_to='images/', blank=False, null=False)
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title if self.title else f"Image {self.id}"
+
+    class Meta:
+        verbose_name = "Telefon Surat"
+        verbose_name_plural = "Telefon Suratlar"

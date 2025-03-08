@@ -4,7 +4,7 @@ from django.contrib import admin
 
 # Local Modules
 # Model import
-from .models import Contact, BlockedIP, CheckedContact, UncheckedContact
+from .models import Contact, BlockedIP, CheckedContact, UncheckedContact, IndexTitle, Certificate, CallNum, MaxImage, MinImage
 
 # Ather Modules
 from django.utils.html import format_html
@@ -47,3 +47,9 @@ class BlockedIPAdmin(admin.ModelAdmin):
     date_hierarchy = 'last_request'
     ordering = ('-last_request',)
     list_per_page = 10
+
+admin.site.register(IndexTitle)
+admin.site.register(Certificate)
+admin.site.register(CallNum)
+admin.site.register(MaxImage)
+admin.site.register(MinImage)

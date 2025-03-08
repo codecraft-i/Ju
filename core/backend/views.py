@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 # Create your views here.
 
 # Model import
-from .models import Contact, BlockedIP
+from .models import Contact, BlockedIP, Certificate, IndexTitle, CallNum, MinImage, MaxImage
 # Form import
 from .Forms.forms import ContactForm
 
@@ -50,11 +50,15 @@ class ContactCreateView(FormView):
 
     def form_valid(self, form):
         """ Save the form data and update the request count """        
-        contact = Contact(
-            name=form.cleaned_data['name'],
-            phone=form.cleaned_data['phone'],
-            language_certificate=form.cleaned_data.get('language_certificate', 'No')
-        )
+        # contact = Contact(
+        #     name=form.cleaned_data['name'],
+        #     phone=form.cleaned_data['phone'],
+        #     language_certificate=form.cleaned_data.get('language_certificate', 'No')
+        # )
+        # contact.save()
+
+        contact = form.save(commit=False)
+        # If language_certificate wasn't provided, it will use the default 'No'
         contact.save()
 
         ip = self.get_client_ip()
@@ -64,6 +68,26 @@ class ContactCreateView(FormView):
 
         self.request.session['form_submitted'] = True
         return super().form_valid(form)
+    
+    def get(self, request, *args, **kwargs):
+        indexTitle = IndexTitle.objects.first()
+        certificate = Certificate.objects.first()
+        form = self.form_class()
+
+        callNum = CallNum.objects.first()
+
+        MaxImages = MaxImage.objects.all()
+        MinImages = MinImage.objects.all()
+        context = {
+            "indexTitle": indexTitle,
+            "certificate": certificate,
+            "form": form,
+
+            "callNum": callNum,
+            "MaxImages": MaxImages,
+            "MinImages": MinImages,
+        }
+        return render(request, 'backend/index.html', context)
 
 class SuccessView(TemplateView):
     template_name = 'backend/success.html'
