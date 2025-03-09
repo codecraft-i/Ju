@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 # Create your views here.
 
 # Model import
-from .models import Contact, BlockedIP, Certificate, IndexTitle, CallNum, MinImage, MaxImage
+from .models import *
 # Form import
 from .Forms.forms import ContactForm
 
@@ -99,3 +99,19 @@ class SuccessView(TemplateView):
             return redirect('home')
         request.session['form_submitted'] = False
         return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        succtext = SuccText.objects.first()
+        succdocpic = SuccDocPic.objects.first()
+
+        succlink = SuccLink.objects.all()
+        succdesc = SuccDesc.objects.first()
+
+        context = {
+            "succtext": succtext,
+            "succdocpic": succdocpic,
+            "succlinks": succlink,
+            "succdesc": succdesc,
+        }
+
+        return render(request, 'backend/success.html', context)

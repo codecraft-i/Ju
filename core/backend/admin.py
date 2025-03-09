@@ -4,10 +4,12 @@ from django.contrib import admin
 
 # Local Modules
 # Model import
-from .models import Contact, BlockedIP, CheckedContact, UncheckedContact, IndexTitle, Certificate, CallNum, MaxImage, MinImage
+from .models import *
 
 # Ather Modules
 from django.utils.html import format_html
+
+from django.utils.safestring import mark_safe
 
 admin.site.site_header = "Forever Study Consulting Admin"
 admin.site.site_title = "Web Forever Study"
@@ -53,3 +55,25 @@ admin.site.register(Certificate)
 admin.site.register(CallNum)
 admin.site.register(MaxImage)
 admin.site.register(MinImage)
+
+class SuccTextAdmin(admin.ModelAdmin):
+    list_display = ("title", "rendered_content")
+
+    def rendered_content(self, obj):
+        return mark_safe(obj.title)
+
+    rendered_content.short_description = "Rendered Content"
+
+admin.site.register(SuccText, SuccTextAdmin)
+admin.site.register(SuccDocPic)
+admin.site.register(SuccLink)
+
+class SuccDescAdmin(admin.ModelAdmin):
+    list_display = ("title", "rendered_content")
+
+    def rendered_content(self, obj):
+        return mark_safe(obj.title)
+
+    rendered_content.short_description = "Rendered Content"
+
+admin.site.register(SuccDesc, SuccDescAdmin)

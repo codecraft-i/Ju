@@ -25,16 +25,18 @@
         </header>
         <main>
             <div id="sn1">
-                <span>"Janubiy Koreyaning <span>top 1000</span> <br> nufuzli universitetlari"</span>
+                <span>"{{ succtext.title|safe }}"</span>
             </div>
             <div class="bookList display-gCenter">
-                <img src="{% static 'backend/images/sucBookList.png' %}" alt="Uni List">
+                <img src="{{ succdocpic.image.url }}" alt="Uni List">
                 <div><img id="arrow" src="{% static 'backend/images/icons/arrow-right.png' %}" alt="Arrow"></div>
             </div>
-            <div id="botBtn" class="display-gCenter">
-                <a class="display-f" href="https://t.me/foreverstudyconsultingbot"><img src="{% static 'backend/images/icons/telegram.png' %}" alt="*"><span>Bepul Yuklash</span></a>
-            </div>
-            <div id="sn2" class="display-gCenter"><span>Telegram botga o'tib start <br>tugmasini bosing!</span></div>
+            {% for succlink in succlinks %}
+                <div id="botBtn" class="display-gCenter">
+                    <a class="display-f" href="{{ succlink.address }}"><img src="{% static 'backend/images/icons/telegram.png' %}" alt="*"><span>{{ succlink.title }}</span></a>
+                </div>
+            {% endfor %}
+            <div id="sn2" class="display-gCenter"><span>{{ succdesc.title|safe }}</span></div>
         </main>
     </div>
 </body>
